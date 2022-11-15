@@ -17,6 +17,8 @@ const StartGame = () => {
 		setNumber(value.replace(/[^0-9]/g, ''));
 	};
 
+	const onHandleReset = () => setNumber('');
+
 	return (
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 			<View style={styles.container}>
@@ -36,7 +38,7 @@ const StartGame = () => {
 					/>
 
 					<View style={styles.buttonsContainer}>
-						<TouchableOpacity style={styles.reset}>
+						<TouchableOpacity style={styles.reset} onPress={onHandleReset}>
 							<Text style={{ color: colors.white, fontWeight: '700' }}>
 								Reset
 							</Text>
