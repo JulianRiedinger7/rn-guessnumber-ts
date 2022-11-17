@@ -43,4 +43,35 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
   },
-})
+  selectionContainer: {
+    width: '70%',
+    alignItems: 'center',
+    height: 150,
+    justifyContent: 'space-around',
+    marginTop: 20,
+    borderRadius: 10,
+  },
+  selectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  selectedNumber: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    backgroundColor: colors.secondary,
+    color: colors.white,
+    padding: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  startButton:{
+    backgroundColor: colors.primary,
+    padding: 5,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+  },
+  startText:{
+    color: colors.text,
+    fontWeight: 'bold',
+  },
+  })
