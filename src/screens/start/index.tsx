@@ -6,12 +6,16 @@ import {
 	Keyboard,
 	Alert,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { styles } from './styles';
 import colors from '../../constants/colors';
-import { Card, Input } from '../../components';
+import { Card, Input, NumberContainer } from '../../components';
 
-const StartGame = () => {
+interface Props {
+	onStartGame: (selected: number | null) => void;
+}
+
+const StartGame: FC<Props> = ({ onStartGame }) => {
 	const [number, setNumber] = useState<string>('');
 	const [confirmed, setConfirmed] = useState<boolean>(false);
 	const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
@@ -33,6 +37,7 @@ const StartGame = () => {
 				{ text: 'OK', onPress: onHandleReset },
 			]);
 
+		Keyboard.dismiss();
 		setConfirmed(true);
 		setSelectedNumber(chosenNumber);
 		setNumber('');
@@ -73,8 +78,11 @@ const StartGame = () => {
 				{confirmed ? (
 					<Card style={styles.selectionContainer}>
 						<Text style={styles.selectionTitle}>You selected: </Text>
-						<Text style={styles.selectedNumber}>{selectedNumber}</Text>
-						<TouchableOpacity style={styles.startButton}>
+						<NumberContainer number={selectedNumber} />
+						<TouchableOpacity
+							style={styles.startButton}
+							onPress={() => onStartGame(selectedNumber)}
+						>
 							<Text style={styles.startText}>Start Game</Text>
 						</TouchableOpacity>
 					</Card>

@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.background,
     flex: 1,
   },
   cardContainer: {
@@ -54,15 +53,6 @@ export const styles = StyleSheet.create({
   selectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  selectedNumber: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    backgroundColor: colors.secondary,
-    color: colors.white,
-    padding: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
   },
   startButton:{
     backgroundColor: colors.primary,
