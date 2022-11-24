@@ -1,11 +1,15 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import colors from "../../constants/colors";
 
 export const styles = StyleSheet.create({
+  containerScroll:{
+    flex: 1,
+  },
   container: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    marginVertical: Dimensions.get('screen').height * 0.1,
   },
   cardContainer: {
     borderRadius: 10,

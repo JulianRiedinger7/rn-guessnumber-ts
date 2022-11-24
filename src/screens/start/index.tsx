@@ -5,6 +5,7 @@ import {
 	TouchableWithoutFeedback,
 	Keyboard,
 	Alert,
+	ScrollView,
 } from 'react-native';
 import React, { FC, useState } from 'react';
 import { styles } from './styles';
@@ -45,49 +46,54 @@ const StartGame: FC<Props> = ({ onStartGame }) => {
 
 	return (
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-			<View style={styles.container}>
-				<Card style={styles.cardContainer}>
-					<Text style={styles.title}>Start Game</Text>
-					<Text style={styles.label}>Enter a number</Text>
-					<Input
-						placeholder="0"
-						style={styles.input}
-						maxLength={2}
-						keyboardType="numeric"
-						blurOnSubmit
-						autoCapitalize="none"
-						autoCorrect={false}
-						onChangeText={onHandleChange}
-						value={number}
-					/>
+			<ScrollView style={styles.containerScroll}>
+				<View style={styles.container}>
+					<Card style={styles.cardContainer}>
+						<Text style={styles.title}>Start Game</Text>
+						<Text style={styles.label}>Enter a number</Text>
+						<Input
+							placeholder="0"
+							style={styles.input}
+							maxLength={2}
+							keyboardType="numeric"
+							blurOnSubmit
+							autoCapitalize="none"
+							autoCorrect={false}
+							onChangeText={onHandleChange}
+							value={number}
+						/>
 
-					<View style={styles.buttonsContainer}>
-						<TouchableOpacity style={styles.reset} onPress={onHandleReset}>
-							<Text style={{ color: colors.white, fontWeight: '700' }}>
-								Restart
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.confirm} onPress={onHandleConfirm}>
-							<Text style={{ color: colors.text, fontWeight: '700' }}>
-								Confirm
-							</Text>
-						</TouchableOpacity>
-					</View>
-				</Card>
-
-				{confirmed ? (
-					<Card style={styles.selectionContainer}>
-						<Text style={styles.selectionTitle}>You selected: </Text>
-						<NumberContainer number={selectedNumber} />
-						<TouchableOpacity
-							style={styles.startButton}
-							onPress={() => onStartGame(selectedNumber)}
-						>
-							<Text style={styles.startText}>Start Game</Text>
-						</TouchableOpacity>
+						<View style={styles.buttonsContainer}>
+							<TouchableOpacity style={styles.reset} onPress={onHandleReset}>
+								<Text style={{ color: colors.white, fontWeight: '700' }}>
+									Restart
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={styles.confirm}
+								onPress={onHandleConfirm}
+							>
+								<Text style={{ color: colors.text, fontWeight: '700' }}>
+									Confirm
+								</Text>
+							</TouchableOpacity>
+						</View>
 					</Card>
-				) : null}
-			</View>
+
+					{confirmed ? (
+						<Card style={styles.selectionContainer}>
+							<Text style={styles.selectionTitle}>You selected: </Text>
+							<NumberContainer number={selectedNumber} />
+							<TouchableOpacity
+								style={styles.startButton}
+								onPress={() => onStartGame(selectedNumber)}
+							>
+								<Text style={styles.startText}>Start Game</Text>
+							</TouchableOpacity>
+						</Card>
+					) : null}
+				</View>
+			</ScrollView>
 		</TouchableWithoutFeedback>
 	);
 };

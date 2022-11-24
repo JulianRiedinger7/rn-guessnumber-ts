@@ -1,9 +1,11 @@
-import { StatusBar, StyleSheet } from "react-native";
+import { Dimensions, StatusBar, StyleSheet } from "react-native";
 import colors from "../../constants/colors";
+
+const {width, height} = Dimensions.get('screen')
 
 export const styles = StyleSheet.create({
   container: {
-    height: 100,
+    height: height * 0.1,
     paddingTop: StatusBar.currentHeight,
     backgroundColor: colors.primary,
     justifyContent: 'center',

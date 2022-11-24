@@ -19,6 +19,8 @@ const Game: FC<Props> = ({ selected }) => {
 		generateRandomNumber(selected)
 	);
 
+	/* Probar hacer lo del lower y greater con una funcion que se fije que si es menor o mayor al currentGuess respectivamente, haga una recursion de generar el numero aleatoriom sino probar de hacerlo con refs como se vio en clase */
+
 	return (
 		<View style={styles.container}>
 			<Card style={styles.cardContainer}>
