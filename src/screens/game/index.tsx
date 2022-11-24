@@ -1,25 +1,63 @@
-import { View, Text, TouchableOpacity } from 'react-native';
-import React, { FC, useState } from 'react';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { styles } from './styles';
 import { Card, NumberContainer } from '../../components';
 
 interface Props {
 	selected: number | null;
+	onGameOver: (rounds: number) => void;
 }
 
-const generateRandomNumber = (exclude: number | null): number => {
-	const random = Math.floor(Math.random() * (100 - 1) + 1);
-	if (random === exclude) return generateRandomNumber(exclude);
+const generateRandomNumber = (
+	max: number,
+	min: number,
+	exclude: number | null
+): number => {
+	const random = Math.floor(Math.random() * (max - min) + min);
+	if (random === exclude) return generateRandomNumber(max, min, exclude);
 
 	return random;
 };
 
-const Game: FC<Props> = ({ selected }) => {
+const Game: FC<Props> = ({ selected, onGameOver }) => {
 	const [currentGuess, setCurrentGuess] = useState<number>(
-		generateRandomNumber(selected)
+		generateRandomNumber(100, 1, selected)
 	);
+	const [rounds, setRounds] = useState<number>(0);
+	const currentHigh = useRef(100);
+	const currentLow = useRef(1);
 
-	/* Probar hacer lo del lower y greater con una funcion que se fije que si es menor o mayor al currentGuess respectivamente, haga una recursion de generar el numero aleatoriom sino probar de hacerlo con refs como se vio en clase */
+	const onHandleGuess = (direction: string) => {
+		if (selected) {
+			if (
+				(direction === 'lower' && currentGuess < selected) ||
+				(direction === 'greater' && currentGuess > selected)
+			)
+				return Alert.alert("Don't Lie!", "You know that this isn't true!", [
+					{ text: 'Sorry!' },
+				]);
+
+			if (direction === 'lower') {
+				currentHigh.current = currentGuess;
+			} else {
+				currentLow.current = currentGuess;
+			}
+
+			const random = generateRandomNumber(
+				currentHigh.current,
+				currentLow.current,
+				currentGuess
+			);
+			setCurrentGuess(random);
+			setRounds((prevRounds) => prevRounds + 1);
+		}
+	};
+
+	useEffect(() => {
+		if (currentGuess === selected) {
+			onGameOver(rounds);
+		}
+	}, [selected, currentGuess, onGameOver]);
 
 	return (
 		<View style={styles.container}>
@@ -28,10 +66,16 @@ const Game: FC<Props> = ({ selected }) => {
 				<NumberContainer number={currentGuess} />
 
 				<View style={styles.buttonsContainer}>
-					<TouchableOpacity style={styles.lowerButton}>
+					<TouchableOpacity
+						style={styles.lowerButton}
+						onPress={() => onHandleGuess('lower')}
+					>
 						<Text style={styles.lowerText}>Lower</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.greaterButton}>
+					<TouchableOpacity
+						style={styles.greaterButton}
+						onPress={() => onHandleGuess('greater')}
+					>
 						<Text style={styles.greaterText}>Greater</Text>
 					</TouchableOpacity>
 				</View>
